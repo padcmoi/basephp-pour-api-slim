@@ -3,6 +3,7 @@ namespace App\Application\Utils\Token;
 
 use Ahc\Jwt\JWT;
 use App\Application\Utils\DatabaseManager;
+use Exception;
 
 class JwtManager
 {
@@ -15,8 +16,13 @@ class JwtManager
      */
     protected static function instance()
     {
-        $jwt = new JWT('secret', 'HS256', self::EXPIRE, 10);
-        return $jwt;
+        if (isset($_ENV['JWT_KEY'])) {
+            $expire = isset($_ENV['JWT_EXPIRE']) ? intval($_ENV['JWT_EXPIRE']) : intval(self::EXPIRE);
+            $jwt = new JWT($_ENV['JWT_KEY'], 'HS256', $expire, 10);
+            return $jwt;
+        } else {
+            throw new Exception('JWT KEY introuvable dans .env');
+        }
     }
 
     /**
@@ -26,8 +32,10 @@ class JwtManager
      */
     public static function purge()
     {
+        $expire = isset($_ENV['JWT_EXPIRE']) ? intval($_ENV['JWT_EXPIRE']) : intval(self::EXPIRE);
         DatabaseManager::delete(
-            "DELETE FROM `token` WHERE TIME_TO_SEC( TIMEDIFF(CURRENT_TIMESTAMP() , `expire_at`) ) > 0"
+            "DELETE FROM `token` WHERE TIME_TO_SEC( TIMEDIFF(CURRENT_TIMESTAMP() , `expire_at`) ) > :exp",
+            array(":exp" => $expire)
         );
     }
 
@@ -42,14 +50,16 @@ class JwtManager
      */
     public static function create($uid = null)
     {
-
         $serializedToken = self::instance()->encode([
             "sub" => "access_token",
             "iss" => $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'],
             "uid" => $uid,
             "rnd" => mt_rand(1000, 9999),
         ]);
-        echo '<br/><br/>Create</br/><br/>';
+
+        $expire = isset($_ENV['JWT_EXPIRE']) ? intval($_ENV['JWT_EXPIRE']) : intval(self::EXPIRE);
+        $nbf = intval($expire - $expire * 25 / 100);
+
         $lastInsertId = DatabaseManager::insert(
             "INSERT INTO `token` SET
                 `payload` = md5(:payload),
@@ -57,7 +67,7 @@ class JwtManager
                 `uid` = :uid,
                 `not_renew_before` = DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL :nbf SECOND),
                 `expire_at` = DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL :exp SECOND)",
-            array(':payload' => $serializedToken, ':uid' => $uid, ':nbf' => intval(self::EXPIRE - self::EXPIRE * 25 / 100), ':exp' => self::EXPIRE)
+            array(':payload' => $serializedToken, ':uid' => $uid, ':nbf' => $nbf, ':exp' => $expire)
         );
 
         // A surveiller! Boucle de la mort probable ou a refactorer
@@ -76,7 +86,7 @@ class JwtManager
      *
      * @return {String}
      */
-    public static function renew(string $serializedToken)
+    public static function tryRenew(string $serializedToken)
     {
         if (self::check($serializedToken, true)) {
             $payload = self::getUid($serializedToken);
@@ -113,7 +123,7 @@ class JwtManager
      *
      * @return {Boolean}
      */
-    protected static function check(string $serializedToken, bool $checkNbf = false)
+    public static function check(string $serializedToken, bool $checkNbf = false)
     {
         self::purge(); // On purge avant les jetons expirés
 
@@ -133,19 +143,17 @@ class JwtManager
             $payload = self::instance()->decode($serializedToken);
 
             if (!isset($payload['sub']) || $payload['sub'] != 'access_token') {
-                http_response_code(403);
-                exit;
-                return false;
+                // retourne http code car une manque une clé au payload et/ou son contenu
+                http_response_code(403);exit;
             } else if (!isset($payload['iss']) || $payload['iss'] != $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST']) {
-                http_response_code(403);
-                exit;
-                return false;
+                // retourne http code car une manque une clé au payload et/ou son contenu
+                http_response_code(403);exit;
             } else {
                 return true;
             }
 
         } else {
-            return false;
+            return false; // Invalide dans la base de données
         }
     }
 }

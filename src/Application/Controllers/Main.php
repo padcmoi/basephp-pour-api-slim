@@ -11,15 +11,21 @@ class Main
     public function index(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
 
-        JwtManager::purge();
+//         JwtManager::purge();
 
         $dodo = JwtManager::create();
-// var_dump(JwtManager::getUid('aze.dfg.azz'));
-        echo $dodo . '<br/><br/>';
+        // // var_dump(JwtManager::getUid('aze.dfg.azz'));
+        // echo $dodo . '<br/><br/>';
 
-        JwtManager::renew($dodo);
-        echo JwtManager::EXPIRE * 20 / 100;
-        echo JwtManager::getUid('aze.dfg.azz');
+//         JwtManager::tryRenew($dodo);
+        //         echo JwtManager::EXPIRE * 25 / 100;
+
+        $test_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhY2Nlc3NfdG9rZW4iLCJpc3MiOiJodHRwOi8vYmFzZXBocC1wb3VyLWFwaS1zbGltLnRlc3QiLCJ1aWQiOm51bGwsInJuZCI6ODc2MSwiZXhwIjoxNjMzMDExNTc4fQ.K0kKuYjr-sGdz9enCLz4z3vYxtVNSqatotlfjYZHovI';
+
+        echo JwtManager::getUid($test_token);
+
+        var_dump(JwtManager::getUid($test_token));
+        var_dump(JwtManager::check($test_token));
 
         // new JwtManager();
         // phpinfo();

@@ -1,7 +1,7 @@
 <?php
 namespace App\Application\Utils\Token;
 
-use App\Application\Utils\DatabaseManager;
+use App\Application\Utils\Database;
 
 class DatabaseRequire
 {
@@ -12,7 +12,7 @@ class DatabaseRequire
      */
     public static function check()
     {
-        $db = DatabaseManager::request();
+        $db = Database::request();
 
         $db->query("
         CREATE TABLE IF NOT EXISTS `token` (
@@ -21,7 +21,7 @@ class DatabaseRequire
             `payload` varchar(300) NOT NULL,
             `uid` int(11) DEFAULT NULL,
             `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            `not_renew_before` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
+            `not_before_renew` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
             `expire_at` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
             PRIMARY KEY (`id`),
             UNIQUE KEY (`payload`),

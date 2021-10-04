@@ -2,9 +2,7 @@
 
 namespace App\Application\Utils;
 
-use PDO;
-
-class DatabaseManager
+class Database
 {
 
     /**
@@ -15,7 +13,12 @@ class DatabaseManager
      */
     protected static function instance()
     {
-        $db = new PDO(
+        if (!isset($_ENV['DB_HOSTNAME'])) {throw new \Exception('DB_HOSTNAME introuvable dans .env');}
+        if (!isset($_ENV['DB_DATABASE'])) {throw new \Exception('DB_DATABASE introuvable dans .env');}
+        if (!isset($_ENV['DB_USERNAME'])) {throw new \Exception('DB_USERNAME introuvable dans .env');}
+        if (!isset($_ENV['DB_PASSWORD'])) {throw new \Exception('DB_PASSWORD introuvable dans .env');}
+
+        $db = new \PDO(
             'mysql:host=' . $_ENV['DB_HOSTNAME'] . ';dbname=' . $_ENV['DB_DATABASE'] . ';charset=utf8;',
             $_ENV['DB_USERNAME'],
             $_ENV['DB_PASSWORD']

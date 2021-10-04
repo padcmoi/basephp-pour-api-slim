@@ -1,8 +1,8 @@
 <?php
 namespace App\Application\Controllers;
 
-use App\Application\Utils\Token\CsrfManager;
-use App\Application\Utils\Token\JwtManager;
+use App\Application\Utils\Token\CsrfToken;
+use App\Application\Utils\Token\JwtToken;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -26,26 +26,26 @@ class Main
         // echo '<br/><br/>';
         // echo bin2hex(random_bytes(5));
         // echo '<br/><br/>';
-        // echo CsrfManager::create();
-        if (CsrfManager::update('ZTYxMGNiNDFjZTE2MzMwNDU3NTI')) {echo 'true';} else {echo 'false';}
+        // echo CsrfToken::create();
+        if (CsrfToken::update('ZTYxMGNiNDFjZTE2MzMwNDU3NTI')) {echo 'true';} else {echo 'false';}
 
-        JwtManager::purge();
+        JwtToken::purge();
 
-        $dodo = JwtManager::create();
-        // // var_dump(JwtManager::getUid('aze.dfg.azz'));
-        // echo '<br/><br/>';
+        $dodo = JwtToken::create();
+        // // var_dump(JwtToken::getUid('aze.dfg.azz'));
+        echo '<br/><br/>' . $dodo . '<br/><br/>';
 
-        JwtManager::tryRenew($dodo);
-        //         echo JwtManager::EXPIRE * 25 / 100;
+        JwtToken::tryRenew($dodo);
+        //         echo JwtToken::EXPIRE * 25 / 100;
 
-        $test_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhY2Nlc3NfdG9rZW4iLCJpc3MiOiJodHRwOi8vYmFzZXBocC1wb3VyLWFwaS1zbGltLnRlc3QiLCJ1aWQiOm51bGwsInJuZCI6ODc2MSwiZXhwIjoxNjMzMDExNTc4fQ.K0kKuYjr-sGdz9enCLz4z3vYxtVNSqatotlfjYZHovI';
+        $test_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYmFzZXBocC1wb3VyLWFwaS1zbGltLnRlc3QiLCJzdWIiOiJhY2Nlc3NfdG9rZW4iLCJleHAiOjE2MzMzNDYxNTYsImlhdCI6MTYzMzM0NjA5Niwicm5kIjoiYmNlM2U2Y2IwY2IyNDk4ZDRjMjI3N2FhYzIwNTlkNDkiLCJ1aWQiOjN9.tLCkIpjqfuDJfZzWUcG2UkZ8_8E_-riDHuB2-vJ0a4E';
 
-        echo JwtManager::getUid($test_token);
+        echo 'uid=' . JwtToken::getUid($test_token);
 
-        // var_dump(JwtManager::getUid($test_token));
-        var_dump(JwtManager::check($test_token));
+        // var_dump(JwtToken::getUid($test_token));
+        var_dump(JwtToken::check($test_token));
 
-        // new JwtManager();
+        // new JwtToken();
         // phpinfo();
         $response->getBody()->write('');
 

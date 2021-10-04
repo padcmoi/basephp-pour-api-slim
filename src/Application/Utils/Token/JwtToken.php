@@ -2,10 +2,9 @@
 namespace App\Application\Utils\Token;
 
 use Ahc\Jwt\JWT;
-use App\Application\Utils\DatabaseManager;
-use Exception;
+use App\Application\Utils\Database;
 
-class JwtManager
+class JwtToken
 {
     const EXPIRE = 3600;
 
@@ -21,7 +20,7 @@ class JwtManager
             $jwt = new JWT($_ENV['JWT_KEY'], 'HS256', $expire, 10);
             return $jwt;
         } else {
-            throw new Exception('JWT KEY introuvable dans .env');
+            throw new \Exception('JWT KEY introuvable dans .env');
         }
     }
 
@@ -35,7 +34,7 @@ class JwtManager
         DatabaseRequire::check();
 
         $expire = isset($_ENV['JWT_EXPIRE']) ? intval($_ENV['JWT_EXPIRE']) : intval(self::EXPIRE);
-        DatabaseManager::delete(
+        Database::delete(
             "DELETE FROM `token` WHERE `header` = 'jwt' AND TIME_TO_SEC( TIMEDIFF(CURRENT_TIMESTAMP() , `expire_at`) ) > :exp",
             array(":exp" => $expire)
         );
@@ -54,22 +53,24 @@ class JwtManager
     {
         DatabaseRequire::check();
 
-        $serializedToken = self::instance()->encode([
-            "sub" => "access_token",
-            "iss" => $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'],
-            "uid" => $uid,
-            "rnd" => mt_rand(1000, 9999),
-        ]);
-
         $expire = isset($_ENV['JWT_EXPIRE']) ? intval($_ENV['JWT_EXPIRE']) : intval(self::EXPIRE);
         $nbf = intval($expire - $expire * 25 / 100);
 
-        $lastInsertId = DatabaseManager::insert(
+        $serializedToken = self::instance()->encode([
+            "iss" => $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'],
+            "sub" => "access_token",
+            "exp" => time() + $expire,
+            "iat" => time(),
+            "rnd" => md5(microtime(true)),
+            "uid" => $uid,
+        ]);
+
+        $lastInsertId = Database::insert(
             "INSERT INTO `token` SET
                 `payload` = md5(:payload),
                 `header` = 'jwt',
                 `uid` = :uid,
-                `not_renew_before` = DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL :nbf SECOND),
+                `not_before_renew` = DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL :nbf SECOND),
                 `expire_at` = DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL :exp SECOND)",
             array(':payload' => $serializedToken, ':uid' => $uid, ':nbf' => $nbf, ':exp' => $expire)
         );
@@ -111,6 +112,7 @@ class JwtManager
     public static function getUid($serializedToken)
     {
         if (self::check($serializedToken)) {
+            $payload = self::instance()->decode($serializedToken);
             return isset($payload['uid']) ? $payload['uid'] : -1;
         } else {
             return -1;
@@ -131,9 +133,9 @@ class JwtManager
     {
         self::purge(); // On purge avant les jetons expirés
 
-        $add_nbf = $checkNbf ? ' AND TIME_TO_SEC( TIMEDIFF(CURRENT_TIMESTAMP() , `not_renew_before `) ) > 0 ' : '';
+        $add_nbf = $checkNbf ? ' AND TIME_TO_SEC( TIMEDIFF(CURRENT_TIMESTAMP() , `not_before_renew `) ) > 0 ' : '';
 
-        $result = DatabaseManager::rowCount(
+        $result = Database::rowCount(
             "SELECT * FROM `token` WHERE
                 `payload` = MD5(:payload) AND
                 `header` = 'jwt' AND

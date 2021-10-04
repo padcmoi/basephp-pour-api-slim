@@ -69,9 +69,9 @@ class DotEnv
             "JWT_EXPIRE=3600\n",
 
             "DB_HOSTNAME='localhost'",
-            "DB_USERNAME='sileas'",
-            "DB_PASSWORD='123'",
-            "DB_DATABASE='escapeapp'\n",
+            "DB_USERNAME='user'",
+            "DB_PASSWORD='password'",
+            "DB_DATABASE='base'\n",
         ];
     }
 

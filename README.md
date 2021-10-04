@@ -1,4 +1,4 @@
-# Slim Framework 4 Skeleton Application
+# Skeleton pour API sur Slim Framework 4
 
 [![Coverage Status](https://coveralls.io/repos/github/slimphp/Slim-Skeleton/badge.svg?branch=master)](https://coveralls.io/github/slimphp/Slim-Skeleton?branch=master)
 
@@ -6,39 +6,30 @@ Use this skeleton application to quickly setup and start working on a new Slim F
 
 This skeleton application was built for Composer. This makes setting up a new Slim Framework application quick and easy.
 
-## Install the Application
+## Installer et configurer l'Api
 
-Run this command from the directory in which you want to install your new Slim Framework application.
+Déplacer simplement tous les fichiers à la racine d'un serveur Apache2 
 
-```bash
-composer create-project slim/slim-skeleton [my-app-name]
+Installer les dépendances avec 
+```
+composer install
 ```
 
-Replace `[my-app-name]` with the desired directory name for your new application. You'll want to:
+Executer dans un navigateur l'api afin de vérifier si il y a une réponse, 
+si il y a une erreur c'est normal car la base de donnees n'est pas renseigné
 
-* Point your virtual host document root to your new application's `public/` directory.
-* Ensure `logs/` is web writable.
+Ouvrir le fichier .env qui a été généré par l'Api
+```
+SHOW_ERRORS=0
 
-To run the application in development, you can run these commands 
+JWT_KEY='Nzg5OWM0NzkzZGEyNzM4MzYzYjhkMDc1NjI0NjBmNGFmNTkyMzBiMDAzOWU0NzU2YTgwOTE3YmY5MWY5MGI2Yw=='
+JWT_EXPIRE=3600
 
-```bash
-cd [my-app-name]
-composer start
-
-php -S localhost:3000 -t public public/index.php
+DB_HOSTNAME='localhost'
+DB_USERNAME='user'
+DB_PASSWORD='password'
+DB_DATABASE='base'
 ```
 
-Or you can use `docker-compose` to run the app with `docker`, so you can run these commands:
-```bash
-cd [my-app-name]
-docker-compose up -d
-```
-After that, open `http://localhost:8080` in your browser.
-
-Run this command in the application directory to run the test suite
-
-```bash
-composer test
-```
-
-That's it! Now go build something cool.
+## Important
+Veillez à ce que le .htaccess à la racine du projet et dans le dossier /public soit bien lu par le serveur Apache2, autrement les informations confidentielles risquent d'etre visibles

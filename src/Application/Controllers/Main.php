@@ -1,6 +1,7 @@
 <?php
 namespace App\Application\Controllers;
 
+use App\Application\Utils\Token\CsrfManager;
 use App\Application\Utils\Token\JwtManager;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -11,20 +12,37 @@ class Main
     public function index(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
 
-//         JwtManager::purge();
+        /*To generate a cryptographically secure token */
+
+        //Generate a random string.
+        // $token = openssl_random_pseudo_bytes(16);
+        // echo 'TOKEN: ' . $token;
+
+        // //Convert the binary data into hexadecimal representation.
+        // $token = bin2hex($token);
+
+        // $str = bin2hex(random_bytes(5)) . time();
+        // echo rtrim(strtr(base64_encode(bin2hex(random_bytes(5)) . time()), '+/', '-_'), '=');
+        // echo '<br/><br/>';
+        // echo bin2hex(random_bytes(5));
+        // echo '<br/><br/>';
+        // echo CsrfManager::create();
+        if (CsrfManager::update('ZTYxMGNiNDFjZTE2MzMwNDU3NTI')) {echo 'true';} else {echo 'false';}
+
+        JwtManager::purge();
 
         $dodo = JwtManager::create();
         // // var_dump(JwtManager::getUid('aze.dfg.azz'));
-        // echo $dodo . '<br/><br/>';
+        // echo '<br/><br/>';
 
-//         JwtManager::tryRenew($dodo);
+        JwtManager::tryRenew($dodo);
         //         echo JwtManager::EXPIRE * 25 / 100;
 
         $test_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhY2Nlc3NfdG9rZW4iLCJpc3MiOiJodHRwOi8vYmFzZXBocC1wb3VyLWFwaS1zbGltLnRlc3QiLCJ1aWQiOm51bGwsInJuZCI6ODc2MSwiZXhwIjoxNjMzMDExNTc4fQ.K0kKuYjr-sGdz9enCLz4z3vYxtVNSqatotlfjYZHovI';
 
         echo JwtManager::getUid($test_token);
 
-        var_dump(JwtManager::getUid($test_token));
+        // var_dump(JwtManager::getUid($test_token));
         var_dump(JwtManager::check($test_token));
 
         // new JwtManager();

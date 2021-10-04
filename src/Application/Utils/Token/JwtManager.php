@@ -32,9 +32,11 @@ class JwtManager
      */
     public static function purge()
     {
+        DatabaseRequire::check();
+
         $expire = isset($_ENV['JWT_EXPIRE']) ? intval($_ENV['JWT_EXPIRE']) : intval(self::EXPIRE);
         DatabaseManager::delete(
-            "DELETE FROM `token` WHERE TIME_TO_SEC( TIMEDIFF(CURRENT_TIMESTAMP() , `expire_at`) ) > :exp",
+            "DELETE FROM `token` WHERE `header` = 'jwt' AND TIME_TO_SEC( TIMEDIFF(CURRENT_TIMESTAMP() , `expire_at`) ) > :exp",
             array(":exp" => $expire)
         );
     }
@@ -50,6 +52,8 @@ class JwtManager
      */
     public static function create($uid = null)
     {
+        DatabaseRequire::check();
+
         $serializedToken = self::instance()->encode([
             "sub" => "access_token",
             "iss" => $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'],

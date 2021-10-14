@@ -1,8 +1,7 @@
 <?php
 namespace App\Application\Controllers;
 
-use App\Application\Utils\Token\CsrfToken;
-use App\Application\Utils\Token\JwtToken;
+use App\Application\Utils\SanitizeData;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -27,38 +26,48 @@ class Main
         // echo bin2hex(random_bytes(5));
         // echo '<br/><br/>';
         // echo CsrfToken::create();
-        if (CsrfToken::update('ZTYxMGNiNDFjZTE2MzMwNDU3NTI')) {echo 'true';} else {echo 'false';}
-
-        JwtToken::purge();
-
-        $dodo = JwtToken::create();
         // // var_dump(JwtToken::getUid('aze.dfg.azz'));
-        echo '<br/><br/>' . $dodo . '<br/><br/>';
-
-        JwtToken::tryRenew($dodo);
         //         echo JwtToken::EXPIRE * 25 / 100;
-
-        $test_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYmFzZXBocC1wb3VyLWFwaS1zbGltLnRlc3QiLCJzdWIiOiJhY2Nlc3NfdG9rZW4iLCJleHAiOjE2MzMzNDYxNTYsImlhdCI6MTYzMzM0NjA5Niwicm5kIjoiYmNlM2U2Y2IwY2IyNDk4ZDRjMjI3N2FhYzIwNTlkNDkiLCJ1aWQiOjN9.tLCkIpjqfuDJfZzWUcG2UkZ8_8E_-riDHuB2-vJ0a4E';
-
-        echo 'uid=' . JwtToken::getUid($test_token);
-
         // var_dump(JwtToken::getUid($test_token));
-        var_dump(JwtToken::check($test_token));
-
         // new JwtToken();
         // phpinfo();
-        $response->getBody()->write('');
-
         // $response->getBody()->write("URN /home <br/><br/>");
         // $response->getBody()->write("URN /users <br/><br/>");
         // $response->getBody()->write("URN /foo/:jesuispersonnalisable <br/><br/>");
 
+        // if (CsrfToken::update('ZTYxMGNiNDFjZTE2MzMwNDU3NTI')) {echo 'true';} else {echo 'false';}
+        // JwtToken::purge();
+        // $dodo = JwtToken::create();
+        // echo '<br/><br/>' . $dodo . '<br/><br/>';
+        // JwtToken::tryRenew($dodo);
+        // $test_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYmFzZXBocC1wb3VyLWFwaS1zbGltLnRlc3QiLCJzdWIiOiJhY2Nlc3NfdG9rZW4iLCJleHAiOjE2MzMzNDYxNTYsImlhdCI6MTYzMzM0NjA5Niwicm5kIjoiYmNlM2U2Y2IwY2IyNDk4ZDRjMjI3N2FhYzIwNTlkNDkiLCJ1aWQiOjN9.tLCkIpjqfuDJfZzWUcG2UkZ8_8E_-riDHuB2-vJ0a4E';
+        // echo 'uid=' . JwtToken::getUid($test_token);
+        // var_dump(JwtToken::check($test_token));
+
+        SanitizeData::without(['ab', 'baa', 'aa']);
+        // SanitizeData::clean(false, ['strip_tags', 'htmlspecialchars']);
+        SanitizeData::clean(true, []);
+
+        var_dump(SanitizeData::show());
+        var_dump(json_encode(SanitizeData::show()));
+
+        // Test2::go();
+
+        $response->getBody()->write('');
+        return $response;
+    }
+
+    public function phpinfo(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    {
+        phpinfo();
+        $response->getBody()->write("");
         return $response;
     }
 
     public function helloWorld(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
 
+        phpinfo();
         echo "<br/><br/><br/>";
 
         $response->getBody()->write("<br/><br/><br/>HelloWorld");

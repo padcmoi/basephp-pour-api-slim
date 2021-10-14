@@ -21,6 +21,8 @@ $errorHandler->forceContentType('application/json');
 
 // Controllers
 $app->get('/', Main::class . ':index');
+$app->get('/phpinfo', Main::class . ':phpinfo');
+$app->post('/phpinfo', Main::class . ':phpinfo');
 $app->get('/home', Main::class . ':helloWorld');
 $app->get('/users', Main::class . ':helloUsers');
 $app->get('/foo/{hi}', Main::class . ':fooHi');

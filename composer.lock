@@ -766,16 +766,18 @@
             "source": {
                 "type": "git",
                 "url": "https://gitlab.com/juliennaskot/bundle-api-slim.git",
-                "reference": "fd34e4b5505a70fdd7ad9a48a13bfb48209241b1"
+                "reference": "1dd2962f8223ad55cd4c1ad3baf281db595f3eca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/juliennaskot%2Fbundle-api-slim/repository/archive.zip?sha=fd34e4b5505a70fdd7ad9a48a13bfb48209241b1",
-                "reference": "fd34e4b5505a70fdd7ad9a48a13bfb48209241b1",
+                "url": "https://gitlab.com/api/v4/projects/juliennaskot%2Fbundle-api-slim/repository/archive.zip?sha=1dd2962f8223ad55cd4c1ad3baf281db595f3eca",
+                "reference": "1dd2962f8223ad55cd4c1ad3baf281db595f3eca",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0"
+                "adhocore/jwt": "^1.1",
+                "php": "^7.2 || ^8.0",
+                "vlucas/phpdotenv": "^5.3"
             },
             "type": "library",
             "autoload": {
@@ -801,7 +803,7 @@
             "support": {
                 "issues": "https://gitlab.com/api/v4/projects/30460297/issues"
             },
-            "time": "2021-10-14T21:11:56+00:00"
+            "time": "2021-10-15T00:06:17+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",

@@ -1,7 +1,7 @@
 <?php
 
 use App\Application\Controllers\Main;
-use App\Application\Utils\DotEnv;
+use Padcmoi\BundleApiSlim\DotEnv;
 use Slim\Factory\AppFactory;
 
 require __DIR__ . '/../vendor/autoload.php';

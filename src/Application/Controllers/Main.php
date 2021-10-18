@@ -99,7 +99,7 @@ class Main
 
     public function captcha(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        // SimplyCaptcha::create(); // Génére un nouveau captcha
+        SimplyCaptcha::create(); // Génére un nouveau captcha
 
         $captcha = SimplyCaptcha::get();
 

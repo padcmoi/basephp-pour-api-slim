@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6261364cca20e15f9e13be0daf81ccdd",
+    "content-hash": "bd43250a0ec91fcb06cfe61fd4a84034",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -861,16 +861,16 @@
         },
         {
             "name": "padcmoi/bundle-api-slim",
-            "version": "0.41",
+            "version": "0.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/padcmoi/bundle-api-slim.git",
-                "reference": "5d256f6ec679a574dd330f67dd5b3cbf692bbbbd"
+                "reference": "75958fa5760e0ac543e4f03981f64fc1658e09f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padcmoi/bundle-api-slim/zipball/5d256f6ec679a574dd330f67dd5b3cbf692bbbbd",
-                "reference": "5d256f6ec679a574dd330f67dd5b3cbf692bbbbd",
+                "url": "https://api.github.com/repos/padcmoi/bundle-api-slim/zipball/75958fa5760e0ac543e4f03981f64fc1658e09f5",
+                "reference": "75958fa5760e0ac543e4f03981f64fc1658e09f5",
                 "shasum": ""
             },
             "require": {
@@ -901,9 +901,9 @@
             ],
             "support": {
                 "issues": "https://github.com/padcmoi/bundle-api-slim/issues",
-                "source": "https://github.com/padcmoi/bundle-api-slim/tree/0.41"
+                "source": "https://github.com/padcmoi/bundle-api-slim/tree/0.42"
             },
-            "time": "2021-10-16T20:53:00+00:00"
+            "time": "2021-10-18T19:02:52+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",

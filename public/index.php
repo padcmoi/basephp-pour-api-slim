@@ -23,7 +23,8 @@ $errorHandler->forceContentType('application/json');
 $app->get('/', Main::class . ':index');
 $app->get('/phpinfo', Main::class . ':phpinfo');
 $app->post('/phpinfo', Main::class . ':phpinfo');
-$app->get('/home', Main::class . ':helloWorld');
+$app->get('/picture', Main::class . ':picture');
+$app->get('/captcha', Main::class . ':captcha');
 $app->get('/users', Main::class . ':helloUsers');
 $app->get('/foo/{hi}', Main::class . ':fooHi');
 

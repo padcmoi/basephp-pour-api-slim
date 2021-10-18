@@ -26,6 +26,7 @@
         "guzzlehttp/psr7": "^2.0",
         "http-interop/http-factory-guzzle": "^1.2",
         "laminas/laminas-diactoros": "^2.8",
+        "melihovv/base64-image-decoder": "^0.2.0",
         "monolog/monolog": "^2.3",
         "nyholm/psr7": "^1.4",
         "nyholm/psr7-server": "^1.0",

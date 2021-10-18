@@ -1,8 +1,9 @@
 <?php
 namespace App\Application\Controllers;
 
+use GuzzleHttp\Psr7\Stream;
+use Melihovv\Base64ImageDecoder\Base64ImageDecoder;
 use Padcmoi\BundleApiSlim\SimplyCaptcha;
-use Padcmoi\BundleApiSlim\Token\JwtToken;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -41,8 +42,8 @@ class Main
         // $dodo = JwtToken::create();
         // // echo '<br/><br/>' . $dodo . '<br/><br/>';
         // JwtToken::tryRenew($dodo);
-        $test_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYmFzZXBocC1wb3VyLWFwaS1zbGltLnRlc3QiLCJzdWIiOiJhY2Nlc3NfdG9rZW4iLCJleHAiOjE2MzMzNDYxNTYsImlhdCI6MTYzMzM0NjA5Niwicm5kIjoiYmNlM2U2Y2IwY2IyNDk4ZDRjMjI3N2FhYzIwNTlkNDkiLCJ1aWQiOjN9.tLCkIpjqfuDJfZzWUcG2UkZ8_8E_-riDHuB2-vJ0a4E';
-        echo 'uid=' . JwtToken::getUid($test_token);
+        // $test_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYmFzZXBocC1wb3VyLWFwaS1zbGltLnRlc3QiLCJzdWIiOiJhY2Nlc3NfdG9rZW4iLCJleHAiOjE2MzMzNDYxNTYsImlhdCI6MTYzMzM0NjA5Niwicm5kIjoiYmNlM2U2Y2IwY2IyNDk4ZDRjMjI3N2FhYzIwNTlkNDkiLCJ1aWQiOjN9.tLCkIpjqfuDJfZzWUcG2UkZ8_8E_-riDHuB2-vJ0a4E';
+        // echo 'uid=' . JwtToken::getUid($test_token);
         // var_dump(JwtToken::check($test_token));
 
         // SanitizeData::without(['ab', 'baa', 'aa']);
@@ -58,10 +59,12 @@ class Main
         // var_dump(SanitizeData::show());
         // var_dump(json_encode(SanitizeData::show()));
 
-        var_dump(SimplyCaptcha::check('K46J29'));
+        // var_dump(SimplyCaptcha::check('K46J29'));
 
-        SimplyCaptcha::create();
-        // var_dump(SimplyCaptcha::create());
+        // SimplyCaptcha::create();
+
+        $captcha = SimplyCaptcha::create();
+        var_dump($captcha['picture']);
 
         // Test2::go();
 
@@ -76,7 +79,7 @@ class Main
         return $response;
     }
 
-    public function helloWorld(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    public function picture(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
 
         $loadImage = 'C:\dev.png';
@@ -92,6 +95,25 @@ class Main
             ->withHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0')
             ->withHeader('Pragma', 'public')
             ->withBody($stream);
+    }
+
+    public function captcha(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    {
+        // SimplyCaptcha::create(); // Génére un nouveau captcha
+
+        $captcha = SimplyCaptcha::get();
+
+        if ($captcha) {
+            $decoder = new Base64ImageDecoder($captcha, $allowedFormats = ['jpeg', 'png', 'gif']);
+            header("Content-type: " . 'image/' . $decoder->getFormat());
+            $response->getBody()->write($decoder->getDecodedContent());
+            return $response;
+        } else {
+            $payload = json_encode(['captcha' => false], JSON_PRETTY_PRINT);
+            $response->getBody()->write($payload);
+            return $response->withHeader('Content-Type', 'application/json');
+        }
+
     }
 
     public function helloUsers(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface

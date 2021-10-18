@@ -79,11 +79,19 @@ class Main
     public function helloWorld(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
 
-        phpinfo();
-        echo "<br/><br/><br/>";
+        $loadImage = 'C:\dev.png';
+        $fh = fopen($loadImage, 'rb');
 
-        $response->getBody()->write("<br/><br/><br/>HelloWorld");
-        return $response;
+        $stream = new Stream($fh);
+
+        return $response
+            ->withHeader('Content-Type', mime_content_type($loadImage))
+            ->withHeader('Content-Transfer-Encoding', 'Binary')
+            ->withHeader('Content-Length', filesize($loadImage))
+            ->withHeader('Expires', '0')
+            ->withHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0')
+            ->withHeader('Pragma', 'public')
+            ->withBody($stream);
     }
 
     public function helloUsers(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface

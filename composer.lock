@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "07be50604a043c2e66915decee982abe",
+    "content-hash": "6e1490707bc74648810e814e677f6a4f",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -64,52 +64,6 @@
             "time": "2021-02-20T09:56:44+00:00"
         },
         {
-            "name": "emarref/jwt",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/emarref/jwt.git",
-                "reference": "79f563750ff90dabd4fa677c4b4e5ec9ed52d9b4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/emarref/jwt/zipball/79f563750ff90dabd4fa677c4b4e5ec9ed52d9b4",
-                "reference": "79f563750ff90dabd4fa677c4b4e5ec9ed52d9b4",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "*"
-            },
-            "suggest": {
-                "ext-openssl": "Enables more token encryption options"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Emarref\\Jwt\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Malcolm Fell",
-                    "email": "emarref@gmail.com"
-                }
-            ],
-            "description": "A JWT implementation",
-            "support": {
-                "issues": "https://github.com/emarref/jwt/issues",
-                "source": "https://github.com/emarref/jwt/tree/master"
-            },
-            "time": "2016-09-05T20:33:06+00:00"
-        },
-        {
             "name": "fig/http-message-util",
             "version": "1.1.5",
             "source": {
@@ -167,16 +121,16 @@
         },
         {
             "name": "graham-campbell/result-type",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GrahamCampbell/Result-Type.git",
-                "reference": "84afea85c6841deeea872f36249a206e878a5de0"
+                "reference": "296c015dc30ec4322168c5ad3ee5cc11dae827ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GrahamCampbell/Result-Type/zipball/84afea85c6841deeea872f36249a206e878a5de0",
-                "reference": "84afea85c6841deeea872f36249a206e878a5de0",
+                "url": "https://api.github.com/repos/GrahamCampbell/Result-Type/zipball/296c015dc30ec4322168c5ad3ee5cc11dae827ac",
+                "reference": "296c015dc30ec4322168c5ad3ee5cc11dae827ac",
                 "shasum": ""
             },
             "require": {
@@ -212,7 +166,7 @@
             ],
             "support": {
                 "issues": "https://github.com/GrahamCampbell/Result-Type/issues",
-                "source": "https://github.com/GrahamCampbell/Result-Type/tree/v1.0.2"
+                "source": "https://github.com/GrahamCampbell/Result-Type/tree/v1.0.3"
             },
             "funding": [
                 {
@@ -224,7 +178,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-08-28T21:34:50+00:00"
+            "time": "2021-10-17T19:48:54+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -857,21 +811,21 @@
         },
         {
             "name": "padcmoi/bundle-api-slim",
-            "version": "1.0.0",
+            "version": "0.41",
             "source": {
                 "type": "git",
-                "url": "https://gitlab.com/juliennaskot/bundle-api-slim.git",
-                "reference": "1854ad592b99058c36027ec7ca654b811431772f"
+                "url": "https://github.com/padcmoi/bundle-api-slim.git",
+                "reference": "5d256f6ec679a574dd330f67dd5b3cbf692bbbbd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/juliennaskot%2Fbundle-api-slim/repository/archive.zip?sha=1854ad592b99058c36027ec7ca654b811431772f",
-                "reference": "1854ad592b99058c36027ec7ca654b811431772f",
+                "url": "https://api.github.com/repos/padcmoi/bundle-api-slim/zipball/5d256f6ec679a574dd330f67dd5b3cbf692bbbbd",
+                "reference": "5d256f6ec679a574dd330f67dd5b3cbf692bbbbd",
                 "shasum": ""
             },
             "require": {
                 "adhocore/jwt": "^1.1",
-                "php": "^7.2 || ^8.0",
+                "php": "^7.2",
                 "vlucas/phpdotenv": "^5.3"
             },
             "type": "library",
@@ -890,15 +844,16 @@
                     "email": "juliennaskot@gmail.com"
                 }
             ],
-            "description": "Pack de Class utiles pour créer une API sur SLIM",
+            "description": "Pack de Class utilitaires pour la création d'une API sur SLIM",
             "keywords": [
                 "api",
                 "slim"
             ],
             "support": {
-                "issues": "https://gitlab.com/api/v4/projects/30460297/issues"
+                "issues": "https://github.com/padcmoi/bundle-api-slim/issues",
+                "source": "https://github.com/padcmoi/bundle-api-slim/tree/0.41"
             },
-            "time": "2021-10-15T07:53:57+00:00"
+            "time": "2021-10-16T20:53:00+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
@@ -4498,6 +4453,7 @@
                     "type": "github"
                 }
             ],
+            "abandoned": true,
             "time": "2020-09-28T06:45:17+00:00"
         },
         {

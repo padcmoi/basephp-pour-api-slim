@@ -1,8 +1,7 @@
 <?php
 namespace App\Application\Controllers;
 
-use Padcmoi\BundleApiSlim\SanitizeData;
-use Padcmoi\BundleApiSlim\Token\CsrfToken;
+use Padcmoi\BundleApiSlim\SimplyCaptcha;
 use Padcmoi\BundleApiSlim\Token\JwtToken;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -27,11 +26,11 @@ class Main
         // echo '<br/><br/>';
         // echo bin2hex(random_bytes(5));
         // echo '<br/><br/>';
-        echo CsrfToken::create();
+        // echo CsrfToken::create();
         // // var_dump(JwtToken::getUid('aze.dfg.azz'));
         //         echo JwtToken::EXPIRE * 25 / 100;
         // var_dump(JwtToken::getUid($test_token));
-        new JwtToken();
+        // new JwtToken();
         // phpinfo();
         // $response->getBody()->write("URN /home <br/><br/>");
         // $response->getBody()->write("URN /users <br/><br/>");
@@ -39,19 +38,30 @@ class Main
 
         // if (CsrfToken::update('ZTYxMGNiNDFjZTE2MzMwNDU3NTI')) {echo 'true';} else {echo 'false';}
         // JwtToken::purge();
-        $dodo = JwtToken::create();
-        // echo '<br/><br/>' . $dodo . '<br/><br/>';
+        // $dodo = JwtToken::create();
+        // // echo '<br/><br/>' . $dodo . '<br/><br/>';
         // JwtToken::tryRenew($dodo);
-        // $test_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYmFzZXBocC1wb3VyLWFwaS1zbGltLnRlc3QiLCJzdWIiOiJhY2Nlc3NfdG9rZW4iLCJleHAiOjE2MzMzNDYxNTYsImlhdCI6MTYzMzM0NjA5Niwicm5kIjoiYmNlM2U2Y2IwY2IyNDk4ZDRjMjI3N2FhYzIwNTlkNDkiLCJ1aWQiOjN9.tLCkIpjqfuDJfZzWUcG2UkZ8_8E_-riDHuB2-vJ0a4E';
-        // echo 'uid=' . JwtToken::getUid($test_token);
+        $test_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYmFzZXBocC1wb3VyLWFwaS1zbGltLnRlc3QiLCJzdWIiOiJhY2Nlc3NfdG9rZW4iLCJleHAiOjE2MzMzNDYxNTYsImlhdCI6MTYzMzM0NjA5Niwicm5kIjoiYmNlM2U2Y2IwY2IyNDk4ZDRjMjI3N2FhYzIwNTlkNDkiLCJ1aWQiOjN9.tLCkIpjqfuDJfZzWUcG2UkZ8_8E_-riDHuB2-vJ0a4E';
+        echo 'uid=' . JwtToken::getUid($test_token);
         // var_dump(JwtToken::check($test_token));
 
-        SanitizeData::without(['ab', 'baa', 'aa']);
+        // SanitizeData::without(['ab', 'baa', 'aa']);
         // SanitizeData::clean(false, ['strip_tags', 'htmlspecialchars']);
-        SanitizeData::clean(true, []);
+        // SanitizeData::clean(true, []);
 
-        var_dump(SanitizeData::show());
-        var_dump(json_encode(SanitizeData::show()));
+        // echo '<br/>-' . SanitizeData::cleanIt('<script>alert("Test")   </script>', ['htmlspecialchars', 'strip_tags']) . '<br/>';
+
+        // echo '<br/>-' . Misc::snakeCase('aze ert uUu . tt.oo__aa//jjj;içp') . '<br/>';
+        // echo Misc::stringGenerator('aaa') . '<br/>';
+        // echo Misc::stringGenerator() . '<br/>';
+
+        // var_dump(SanitizeData::show());
+        // var_dump(json_encode(SanitizeData::show()));
+
+        var_dump(SimplyCaptcha::check('K46J29'));
+
+        SimplyCaptcha::create();
+        // var_dump(SimplyCaptcha::create());
 
         // Test2::go();
 

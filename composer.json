@@ -23,21 +23,18 @@
     "require": {
         "php": "^7.2 || ^8.0",
         "ext-json": "*",
-        "adhocore/jwt": "^1.1",
-        "emarref/jwt": "^1.0",
         "guzzlehttp/psr7": "^2.0",
         "http-interop/http-factory-guzzle": "^1.2",
         "laminas/laminas-diactoros": "^2.8",
         "monolog/monolog": "^2.3",
         "nyholm/psr7": "^1.4",
         "nyholm/psr7-server": "^1.0",
-        "padcmoi/bundle-api-slim": "^1.0",
+        "padcmoi/bundle-api-slim": "^0.41.0",
         "paragonie/halite": "^4.8",
         "php-di/php-di": "^6.3",
         "rbdwllr/psr-jwt": "^1.0",
         "slim/psr7": "^1.5",
-        "slim/slim": "^4.8",
-        "vlucas/phpdotenv": "^5.3"
+        "slim/slim": "^4.8"
     },
     "require-dev": {
         "jangregor/phpstan-prophecy": "^0.8.1",

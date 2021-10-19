@@ -30,7 +30,7 @@
         "monolog/monolog": "^2.3",
         "nyholm/psr7": "^1.4",
         "nyholm/psr7-server": "^1.0",
-        "padcmoi/bundle-api-slim": "^0.42.0",
+        "padcmoi/bundle-api-slim": "^0.43.0",
         "paragonie/halite": "^4.8",
         "php-di/php-di": "^6.3",
         "rbdwllr/psr-jwt": "^1.0",
